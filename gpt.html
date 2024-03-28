@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Bot</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #bebebe;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        nav div h3 {
+            margin: 0;
+            font-family: cursive;
+            font-size: x-large;
+            color: teal;
+            background-color: rgb(10, 8, 8);
+            max-width: fit-content;
+        }
+
+        .act {
+            background-color: rgb(20, 27, 34);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .chat-container {
+            max-width: 500px;
+            margin: 25px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 79vh;
+        }
+
+        .chat-box {
+            height: 72vh;
+            overflow-y: auto;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chat-bot {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 12px 12px 12px 0px;
+            clear: both;
+            float: left;
+            max-width: 250px;
+        }
+
+        .user {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 12px 12px 0px 12px;
+            clear: both;
+            float: right;
+            max-width: 250px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            /* margin-left: 44px; */
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div>
+            <h3>Codzlab GPT</h3>
+        </div>
+    </nav>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="chat-bot">Welcome! Ask me anything.</div>
+        </div>
+        <div class="act">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        if (userInput.trim() === "") return;
+
+        var chatBox = document.getElementById("chat-box");
+        var userDiv = document.createElement("div");
+        userDiv.textContent = userInput;
+        userDiv.className = "user";
+
+        chatBox.appendChild(userDiv);
+
+        // Simulating bot response (you can replace this with your actual AI logic)
+        setTimeout(function () {
+            var botResponse = getBotResponse(userInput);
+            var botDiv = document.createElement("div");
+            botDiv.textContent = botResponse;
+            botDiv.className = "chat-bot";
+            chatBox.appendChild(botDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 500);
+    }
+
+    function getBotResponse(userInput) {
+        // You can implement your AI logic here, for now let's just echo the user input
+        // return "You said: " + userInput;
+        var responses = [
+            "I'm just a simple bot, I can't answer that.",
+            "Sorry, I didn't get that. Can you try again?",
+            "Let me think about that...",
+            "How can I assist you today?",
+            "That's an interesting question! Let me find the answer..."
+        ];
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    // Function to save message to local storage
+    function saveMessage(userInput) {
+        let messages = JSON.parse(localStorage.getItem('user-input')) || [];
+        messages.push({ message: message, timestamp: new Date().getTime() });
+        localStorage.setItem('user-input', JSON.stringify(messages));
+    }
+
+    // Function to load messages from local storage
+    function loadMessages() {
+        const messages = JSON.parse(localStorage.getItem('user-input')) || [];
+        messages.forEach(msg => {
+            displayMessage(msg.message, 'other-message');
+        });
+    }
+
+    // Load messages when the page is loaded
+    window.onload = function () {
+        loadMessages();
+        setInterval(checkForNewMessages, 2000); // Check for new messages every 2 seconds
+    };
+
+
+</script>
+
+</html>
