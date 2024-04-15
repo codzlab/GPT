@@ -74,14 +74,24 @@
             border-radius: 12px 12px 0px 12px;
             clear: both;
             float: right;
+            word-wrap: break-word;
             max-width: 250px;
         }
-
-        input[type="text"] {
+        
+        textarea {
             width: 70%;
+            /* Set the width */
+            height: 20px;
             padding: 10px;
+            font-family: sans-serif;
             border: 1px solid #ccc;
             border-radius: 5px;
+            resize: none;
+            overflow: auto;
+        }
+
+        textarea::-webkit-scrollbar {
+            display: none;
         }
 
         button {
@@ -107,7 +117,7 @@
             <div class="chat-bot">Welcome! Ask me anything.</div>
         </div>
         <div class="act">
-            <input type="text" id="user-input" placeholder="Type your message...">
+             <textarea type="text" class="gcse-search" id="user-input" placeholder="Type your message..."></textarea>
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
