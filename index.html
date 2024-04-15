@@ -139,17 +139,32 @@
     }
 
     function getBotResponse(userInput) {
-        // You can implement your AI logic here, for now let's just echo the user input
-        // return "You said: " + userInput;
-        var responses = [
-            "I'm just a simple bot, I can't answer that.",
-            "Sorry, I didn't get that. Can you try again?",
-            "Let me think about that...",
-            "How can I assist you today?",
-            "That's an interesting question! Let me find the answer..."
-        ];
-        return responses[Math.floor(Math.random() * responses.length)];
+    var responses = [];
+
+    if (userInput === "hi" || userInput === "hello" || userInput === "hey") {
+        responses.push("Hi there!");
+        responses.push("Hello!");
+        responses.push("Hey!");
+    } else if (userInput === "how are you?") {
+        responses.push("I'm just a bot, but thanks for asking!");
+        responses.push("I don't have feelings, but I'm functioning well!");
+    } else if (userInput === "write code"||userInput==="generate code") {
+        responses.push(generateCode());
+    } else {
+        responses.push("I'm not sure how to respond to that.");
     }
+
+    return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function generateCode() {
+    // This is a simple example code generation
+    var code = "function myFunction() {\n";
+    code += "\t// Write your code here\n";
+    code += "\tconsole.log('Hello world!');\n";
+    code += "}\n";
+    return code;
+}
 
     // Function to save message to local storage
     function saveMessage(userInput) {
