@@ -114,53 +114,58 @@
 
 </body>
 <script>
+function sendMessage() {
+    var userInput = document.getElementById("user-input").value;
+    if (userInput.trim() === "") return;
 
-    function sendMessage() {
-        var userInput = document.getElementById("user-input").value;
-        if (userInput.trim() === "") return;
+    var chatBox = document.getElementById("chat-box");
+    var userDiv = document.createElement("div");
+    userDiv.textContent = userInput;
+    userDiv.className = "user";
+    document.getElementById('user-input').value='';
 
-        var chatBox = document.getElementById("chat-box");
-        var userDiv = document.createElement("div");
-        userDiv.textContent = userInput;
-        userDiv.className = "user";
-        document.getElementById('user-input').value='';
+    chatBox.appendChild(userDiv);
 
-        chatBox.appendChild(userDiv);
+    // Simulating bot response (you can replace this with your actual AI logic)
+    setTimeout(function () {
+        var botResponse = getBotResponse(userInput);
+        animateBotTyping(botResponse); // Call animateBotTyping to display typing animation
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 500);
+}
 
-        // Simulating bot response (you can replace this with your actual AI logic)
-        setTimeout(function () {
-            var botResponse = getBotResponse(userInput);
-            var botDiv = document.createElement("div");
-            botDiv.textContent = botResponse;
-            botDiv.className = "chat-bot";
-            chatBox.appendChild(botDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 500);
-    }
-
-    function getBotResponse(userInput) {
+function getBotResponse(userInput) {
     var responses = [];
 
     if (userInput === "hi" || userInput === "hello" || userInput === "hey") {
         responses.push("Hi there!");
         responses.push("Hello!");
         responses.push("Hey!");
-        responses.push("Hi there!How can I assit you today.");
-        responses.push("Hello!How are you.");
-        responses.push("Hey!what's up.");
-        responses.push("Hi there!Tell me what is in your mind.");
-        responses.push("Hello! How can I help you Today.");
-        responses.push("Hey!what are you thinking.");
     } else if (userInput === "how are you?") {
         responses.push("I'm just a bot, but thanks for asking!");
         responses.push("I don't have feelings, but I'm functioning well!");
-    } else if (userInput === "write code"||userInput==="generate code") {
-        responses.push(generateCode());
+    } else if (userInput === "write code") {
+        return generateCode(); // Return generated code directly
     } else {
         responses.push("I'm not sure how to respond to that.");
     }
 
     return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function animateBotTyping(message) {
+    var botDiv = document.createElement("div");
+    botDiv.className = "chat-bot";
+    document.getElementById("chat-box").appendChild(botDiv);
+
+    var i = 0;
+    var typingInterval = setInterval(function() {
+        botDiv.textContent += message[i];
+        i++;
+        if (i === message.length) {
+            clearInterval(typingInterval);
+        }
+    }, 100); // Adjust typing speed as needed
 }
 
 function generateCode() {
