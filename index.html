@@ -144,7 +144,7 @@ function getBotResponse(userInput) {
     } else if (userInput === "how are you?") {
         responses.push("I'm just a bot, but thanks for asking!");
         responses.push("I don't have feelings, but I'm functioning well!");
-    } else if (userInput === "write code") {
+    } else if (userInput === "write code"|| userInput ==="generate code"||userInput ==="Generate code" || userInput ==="Write code") {
         return generateCode(); // Return generated code directly
     } else {
         responses.push("I'm not sure how to respond to that.");
